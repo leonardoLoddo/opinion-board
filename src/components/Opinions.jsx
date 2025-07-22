@@ -1,14 +1,14 @@
-import { use } from 'react';
+import { use } from "react";
 
-import { Opinion } from './Opinion';
-import { OpinionsContext } from '../store/opinions-context';
+import { Opinion } from "./Opinion";
+import { OpinionsContext } from "../store/opinions-context";
 
 export function Opinions() {
   const { opinions } = use(OpinionsContext);
-  
+
   return (
     <div id="opinions">
-      <h2>User Opinions</h2>
+      <h2>Opinioni utenti</h2>
       {opinions && (
         <ul>
           {opinions.map((o) => (
@@ -19,7 +19,9 @@ export function Opinions() {
         </ul>
       )}
       {!opinions && (
-        <p>No opinions found. Maybe share your opinion on something?</p>
+        <p>
+          Nessuna opinione trovata. Perché non condividi la tua su qualcosa?
+        </p>
       )}
     </div>
   );

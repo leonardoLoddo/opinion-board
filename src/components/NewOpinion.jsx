@@ -45,11 +45,11 @@ export function NewOpinion() {
 
   return (
     <div id="new-opinion">
-      <h2>Share your opinion!</h2>
+      <h2>Condividi la tua opinione!</h2>
       <form action={formAction}>
         <div className="control-row">
           <p className="control">
-            <label htmlFor="userName">Your Name</label>
+            <label htmlFor="userName">Il tuo nome</label>
             <input
               type="text"
               id="userName"
@@ -59,7 +59,7 @@ export function NewOpinion() {
           </p>
 
           <p className="control">
-            <label htmlFor="title">Title</label>
+            <label htmlFor="title">Titolo</label>
             <input
               type="text"
               id="title"
@@ -69,7 +69,7 @@ export function NewOpinion() {
           </p>
         </div>
         <p className="control">
-          <label htmlFor="body">Your Opinion</label>
+          <label htmlFor="body">La tua opinione</label>
           <textarea
             id="body"
             name="body"

@@ -3,8 +3,8 @@ export function Header() {
     <header id="main-header">
       <h1>OpinionBoard</h1>
       <p>
-        Strong opinions, judged by anonymous internet users. What could possibly
-        go wrong?
+        Opinioni forti, giudicate da utenti anonimi su internet. Cosa potrebbe
+        mai andare storto?
       </p>
     </header>
   );
