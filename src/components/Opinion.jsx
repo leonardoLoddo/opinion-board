@@ -1,4 +1,31 @@
+import { use, useActionState, useOptimistic } from "react";
+import { OpinionsContext } from "../store/opinions-context";
 export function Opinion({ opinion: { id, title, body, userName, votes } }) {
+  const { upvoteOpinion, downvoteOpinion } = use(OpinionsContext);
+
+  const [optimisticVotes, setVotesOptimistically] = useOptimistic(
+    votes,
+    (prevVotes, mode) => (mode === "up" ? prevVotes + 1 : prevVotes - 1)
+  );
+  //useOptimistic mi permette di aggiornare in maniera ottimista l'interfaccia utente, nel caso dei voti aggiorna direttamente il numero dei voti per poi sotituire il numero con quello effettivo una volta completata la chiamata al server
+  //useOptimistic accetta come parametro il vero valore da prendere in considerazione e una funzione per modificarlo in modo ottimista
+  //restituisce come stato il valore ottimista in modo da poterlo richiamare e visualizzare nel componente
+  //restituisce una funzione per settare lo state ottimista da richiamare nelle action
+
+  function upVoteAction() {
+    setVotesOptimistically("up");
+    upvoteOpinion(id);
+  }
+  function downVoteAction() {
+    setVotesOptimistically("down");
+    downvoteOpinion(id);
+  }
+  const [upVoteFormState, upVoteFormAction, upVotePending] =
+    useActionState(upVoteAction);
+
+  const [downVoteFormState, downVoteFormAction, downVotePending] =
+    useActionState(downVoteAction);
+
   return (
     <article>
       <header>
@@ -7,7 +34,10 @@ export function Opinion({ opinion: { id, title, body, userName, votes } }) {
       </header>
       <p>{body}</p>
       <form className="votes">
-        <button>
+        <button
+          formAction={upVoteFormAction}
+          disabled={upVotePending || downVotePending}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -25,9 +55,12 @@ export function Opinion({ opinion: { id, title, body, userName, votes } }) {
           </svg>
         </button>
 
-        <span>{votes}</span>
+        <span>{optimisticVotes}</span>
 
-        <button>
+        <button
+          formAction={downVoteFormAction}
+          disabled={upVotePending || downVotePending}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

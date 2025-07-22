@@ -1,7 +1,10 @@
-import { useActionState } from "react";
+import { useActionState, use } from "react";
+import { OpinionsContext } from "../store/opinions-context";
+import Submit from "./Submit";
 
 export function NewOpinion() {
-  function shareOpinionAction(prevState, formData) {
+  const { addOpinion } = use(OpinionsContext); //ricavo la funzione di submit dal contesto
+  async function shareOpinionAction(prevState, formData) {
     const title = formData.get("title");
     const body = formData.get("body");
     const userName = formData.get("userName");
@@ -32,6 +35,7 @@ export function NewOpinion() {
     }
 
     //submit
+    await addOpinion({ title, body, userName });
     return { errors: null };
   }
 
@@ -73,7 +77,6 @@ export function NewOpinion() {
             defaultValue={formState.enteredValues?.body}
           ></textarea>
         </p>
-
         {formState.errors && (
           <ul className="errors">
             {formState.errors.map((error) => (
@@ -81,10 +84,8 @@ export function NewOpinion() {
             ))}
           </ul>
         )}
-
-        <p className="actions">
-          <button type="submit">Submit</button>
-        </p>
+        <Submit />
+        {/* useFormStatus può essere utilizzato solo in un componente annidato e non nel componente responsabile del form */}
       </form>
     </div>
   );
